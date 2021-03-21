@@ -20,6 +20,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  var titulos=["Caesar","Disco","Vigenere","Enigma"];
   Color_Palette _colores;
   _MyAppState(this._colores);
 
@@ -42,7 +43,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text("Encriptacion"),backgroundColor: _colores.primaryColor,),
+        appBar: AppBar(title: Text(titulos[_currentIndex],textAlign: TextAlign.center,),backgroundColor: _colores.primaryColor,centerTitle: true,),
         body: SizedBox.expand(
           child: PageView(
             controller: _pageController,
@@ -65,23 +66,23 @@ class _MyAppState extends State<MyApp> {
           },
           items: <BottomNavyBarItem>[
             BottomNavyBarItem(
-                title: Text('Item One'),
-                icon: Icon(Icons.home),
+                title: Text(titulos[0]),
+                icon: Icon(Icons.looks_one),
                 activeColor: _colores.primaryColor
             ),
             BottomNavyBarItem(
-                title: Text('Item Two'),
-                icon: Icon(Icons.apps),
+                title: Text(titulos[1]),
+                icon: Icon(Icons.looks_two),
                 activeColor: _colores.primaryColor
             ),
             BottomNavyBarItem(
-                title: Text('Item Three'),
-                icon: Icon(Icons.chat_bubble),
+                title: Text(titulos[2]),
+                icon: Icon(Icons.looks_3),
                 activeColor: _colores.primaryColor
             ),
             BottomNavyBarItem(
-                title: Text('Item Four'),
-                icon: Icon(Icons.settings),
+                title: Text(titulos[3]),
+                icon: Icon(Icons.looks_4),
                 activeColor: _colores.primaryColor
             ),
           ],
