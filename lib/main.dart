@@ -1,77 +1,94 @@
-/// Flutter code sample for TabBar
-
-// This sample shows the implementation of [TabBar] and [TabBarView] using a [DefaultTabController].
-// Each [Tab] corresponds to a child of the [TabBarView] in the order they are written.
-
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:crypting_security_app/colors.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(const MyApp());
+import 'Pages/Caesar_Page.dart';
 
-/// This is the main application widget.
-class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
+void main() => runApp(MyApp());
 
-  static const String _title = 'Flutter Code Sample';
+
+class MyApp extends StatefulWidget {
+  Color_Palette _colores;
+  MyApp(){
+    _colores=Color_Palette();
+  }
+
+  Color_Palette get colores => _colores;
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: MyStatelessWidget(),
-    );
-  }
+  _MyAppState createState() => _MyAppState(_colores);
 }
 
-/// This is the stateless widget that the main application instantiates.
-class MyStatelessWidget extends StatelessWidget {
-  const MyStatelessWidget({Key key}) : super(key: key);
+class _MyAppState extends State<MyApp> {
+  Color_Palette _colores;
+  _MyAppState(this._colores);
+
+  int _currentIndex = 0;
+  PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      initialIndex: 1,
-      length: 4,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Crypting Algorithms'),
-          bottom: const TabBar(
-            tabs: <Widget>[
-              Tab(
-                text: "Vigenere",
-                icon: Icon(Icons.blur_linear),
-              ),
-              Tab(
-                text: "Caesar",
-                icon: Icon(Icons.line_style),
-              ),
-              Tab(
-                text: "Cipher Disk",
-                icon: Icon(Icons.panorama_fish_eye),
-              ),
-              Tab(
-                text: "Enigma Machine",
-                icon: Icon(Icons.keyboard),
-              ),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text("Encriptacion"),backgroundColor: _colores.primaryColor,),
+        body: SizedBox.expand(
+          child: PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() => _currentIndex = index);
+            },
+            children: <Widget>[
+              Caesar_Page(_colores),
+              Caesar_Page(_colores),
+              Caesar_Page(_colores),
+              Caesar_Page(_colores),
             ],
           ),
         ),
-        body: const TabBarView(
-          children: <Widget>[
-            Center(
-              child: Text('Aqui el vigenere'),
+        bottomNavigationBar: BottomNavyBar(
+          selectedIndex: _currentIndex,
+          onItemSelected: (index) {
+            setState(() => _currentIndex = index);
+            _pageController.jumpToPage(index);
+          },
+          items: <BottomNavyBarItem>[
+            BottomNavyBarItem(
+                title: Text('Item One'),
+                icon: Icon(Icons.home),
+                activeColor: _colores.primaryColor
             ),
-            Center(
-              child: Text('Aqui el cesare'),
+            BottomNavyBarItem(
+                title: Text('Item Two'),
+                icon: Icon(Icons.apps),
+                activeColor: _colores.primaryColor
             ),
-            Center(
-              child: Text('Aqui el de disco de cifrado'),
+            BottomNavyBarItem(
+                title: Text('Item Three'),
+                icon: Icon(Icons.chat_bubble),
+                activeColor: _colores.primaryColor
             ),
-            Center(
-              child: Text('Aqui la maquina de enigma'),
+            BottomNavyBarItem(
+                title: Text('Item Four'),
+                icon: Icon(Icons.settings),
+                activeColor: _colores.primaryColor
             ),
           ],
         ),
       ),
     );
   }
+
 }
+
