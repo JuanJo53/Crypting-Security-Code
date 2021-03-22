@@ -1,5 +1,5 @@
 import 'dart:math';
-void main() {
+String Disco(String texto, int flag) {
   List discoInterno=List(26);
   List discoInterno2=List(26);
   List discoExterno=List(26);
@@ -27,8 +27,8 @@ void main() {
   discoExterno[16]='q';discoExterno[17]='r';discoExterno[18]='s';discoExterno[19]='t';
   discoExterno[20]='u';discoExterno[21]='v';discoExterno[22]='w';discoExterno[23]='x';
   discoExterno[24]='y';discoExterno[25]='z';
-  String texto,fraseCifrada="",fraseDescifrada="";
-  texto="hola-mundo-esto-es-una-prueba";
+  String fraseCifrada="",fraseDescifrada="";
+
   List palabras=texto.split("-");
   int cantidad=palabras.length;
 // 		int rand=(int) Math.floor(Math.random()*26);
@@ -36,41 +36,47 @@ void main() {
 
 //   print(discoInterno);
   int contador=0;
-  for(int i=0;i<cantidad;i++) {
-    if(contador==0) {
-      encriptador=verCifrado(discoInterno,rand);
-      fraseCifrada+=discoInterno2[rand]+cifrar(palabras[i],encriptador,discoExterno);
-      contador++;
-    }else if(contador==3) {
-      rand=Random().nextInt(26);
-      encriptador=verCifrado(discoInterno,rand);
-      fraseCifrada+="-"+discoInterno2[rand]+cifrar(palabras[i],encriptador,discoExterno);
-      contador=1;
-    }else {
-      encriptador=verCifrado(discoInterno,rand);
-      fraseCifrada+="-"+cifrar(palabras[i],encriptador,discoExterno);
-      contador++;
-    }
+  if(flag==1){
+    for(int i=0;i<cantidad;i++) {
+      if(contador==0) {
+        encriptador=verCifrado(discoInterno,rand);
+        fraseCifrada+=discoInterno2[rand]+cifrar(palabras[i],encriptador,discoExterno);
+        contador++;
+      }else if(contador==3) {
+        rand=Random().nextInt(26);
+        encriptador=verCifrado(discoInterno,rand);
+        fraseCifrada+="-"+discoInterno2[rand]+cifrar(palabras[i],encriptador,discoExterno);
+        contador=1;
+      }else {
+        encriptador=verCifrado(discoInterno,rand);
+        fraseCifrada+="-"+cifrar(palabras[i],encriptador,discoExterno);
+        contador++;
+      }
 //			System.out.println(rand);
-  }
-  List palabras2=fraseCifrada.split("-");String fraseDescifrada1="";
-  int cantidad2=palabras2.length,verificar=0;
-  for(int j=0;j<cantidad2;j++) {
-    if(j==0) {
-      verificar=1;
-      listaDescifrar=listaVerificar(discoInterno2,palabras2[j],discoInterno);
-      fraseDescifrada1+=verDescifrado(palabras2[j],listaDescifrar,discoExterno,verificar);
-    }else if(j%3==0) {
-      verificar=1;
-      listaDescifrar=listaVerificar(discoInterno2,palabras2[j],discoInterno);
-      fraseDescifrada1+="-"+verDescifrado(palabras2[j],listaDescifrar,discoExterno,verificar);
-    }else {
-      verificar=0;
-      fraseDescifrada1+="-"+verDescifrado(palabras2[j],listaDescifrar,discoExterno,verificar);
     }
+    return fraseCifrada;
+  }else{
+
+    List palabras2=fraseCifrada.split("-");String fraseDescifrada1="";
+    int cantidad2=palabras2.length,verificar=0;
+    for(int j=0;j<cantidad2;j++) {
+      if(j==0) {
+        verificar=1;
+        listaDescifrar=listaVerificar(discoInterno2,palabras2[j],discoInterno);
+        fraseDescifrada1+=verDescifrado(palabras2[j],listaDescifrar,discoExterno,verificar);
+      }else if(j%3==0) {
+        verificar=1;
+        listaDescifrar=listaVerificar(discoInterno2,palabras2[j],discoInterno);
+        fraseDescifrada1+="-"+verDescifrado(palabras2[j],listaDescifrar,discoExterno,verificar);
+      }else {
+        verificar=0;
+        fraseDescifrada1+="-"+verDescifrado(palabras2[j],listaDescifrar,discoExterno,verificar);
+      }
+    }
+    return fraseDescifrada1;
   }
-  print(fraseCifrada);
-  print(fraseDescifrada1);
+
+
 
 }
 List listaVerificar(List discoInterno2,String palabras2,List discoInterno) {
