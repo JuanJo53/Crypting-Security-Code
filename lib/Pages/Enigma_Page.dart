@@ -44,18 +44,15 @@ class _Enigma_PageState extends State<Enigma_Page> {
     return Scaffold(
 
         body: SingleChildScrollView(
-          child: SizedBox(
-            height: size.height-heightAppbar-60,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Input("Ingrese el texto a cifrar",input,TextInputType.text,size.width*0.1),
-                InputEnigma(),
-                Boton("Encriptar"),
-                InputArea("Texto Cifrado",output),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Input("Ingrese el texto a cifrar",input,TextInputType.text,size.width*0.1),
+              InputEnigma(),
+              Boton("Encriptar"),
+              InputArea("Texto Cifrado",output),
 
-              ],
-            ),
+            ],
           ),
         )
     );
