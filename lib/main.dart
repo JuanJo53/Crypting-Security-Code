@@ -1,5 +1,6 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:crypting_security_app/Pages/Enigma_Page.dart';
+import 'package:crypting_security_app/Pages/Vigenere_Page.dart';
 import 'package:crypting_security_app/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -63,7 +64,7 @@ class _MyAppState extends State<MyAppS> {
             children: <Widget>[
               Caesar_Page(_colores),
               Caesar_Page(_colores),
-              Caesar_Page(_colores),
+              Vigenere_Page(_colores),
               Enigma_Page(_colores),
             ],
           ),
