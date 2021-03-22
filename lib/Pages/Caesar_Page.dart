@@ -34,7 +34,15 @@ class _Caesar_PageState extends State<Caesar_Page> {
             children: [
               Input("Ingrese el texto a cifrar",input,TextInputType.text,size.width*0.1),
               InputSlider("Ingrese la cantidad a recorrer",number,TextInputType.number,size.width*0.1),
-              Boton("Encriptar"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+
+                  Boton("Encriptar"),
+
+                  Boton("Desencriptar"),
+                ],
+              ),
               InputArea("Texto Cifrado",output),
 
             ],
@@ -47,6 +55,12 @@ class _Caesar_PageState extends State<Caesar_Page> {
       output.text=caesar(double.parse(number.text).toInt(), input.text);
     });
   }
+  void descifrar(){
+    setState(() {
+      print(number.text);
+      output.text=caesar(double.parse(number.text).toInt()*-1, input.text);
+    });
+  }
   Widget Boton(label){
     return Container(
       decoration: BoxDecoration(
@@ -55,7 +69,15 @@ class _Caesar_PageState extends State<Caesar_Page> {
       ),
       child: MaterialButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(size.width*0.05)),
-        onPressed: (){cifrar();},
+        onPressed: (){
+          if(label=="Encriptar"){
+            cifrar();
+          }
+          else{
+            descifrar();
+          }
+
+        },
         child: Text(label),
       ),
     );

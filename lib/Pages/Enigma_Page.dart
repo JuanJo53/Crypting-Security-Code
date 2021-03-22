@@ -21,25 +21,51 @@ class _Enigma_PageState extends State<Enigma_Page> {
   TextEditingController input=TextEditingController();
   TextEditingController number=TextEditingController();
   TextEditingController output=TextEditingController();
+  TextEditingController rotors=TextEditingController();
+  TextEditingController reflector=TextEditingController();
+  TextEditingController ringSettings=TextEditingController();
+  TextEditingController ringPositions=TextEditingController();
+  TextEditingController plugboard=TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    rotors.text = "I,II,III";
+    reflector.text = "UKW-B";
+    ringSettings.text ="ABC";
+    ringPositions.text = "DEF" ;
+    plugboard.text = "AT BS DE FM IR KN LZ OW PV XY";
+  }
+  var heightAppbar = AppBar().preferredSize.height;
   @override
   Widget build(BuildContext context) {
     size=MediaQuery.of(context).size;
     return Scaffold(
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Input("Ingrese el texto a cifrar",input,TextInputType.text,size.width*0.1),
 
-              Boton("Encriptar"),
-              InputArea("Texto Cifrado",output),
+        body: SingleChildScrollView(
+          child: SizedBox(
+            height: size.height-heightAppbar-85,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Input("Ingrese el texto a cifrar",input,TextInputType.text,size.width*0.1),
+                InputEnigma(),
+                Boton("Encriptar"),
+                InputArea("Texto Cifrado",output),
 
-            ],
+              ],
+            ),
           ),
+        )
     );
   }
   void cifrar(){
     setState(() {
-      output.text=enigma_algo(input.text);
+      output.text=enigma_algo(input.text,rotors.text.split(","),
+          reflector.text,
+          ringSettings.text,
+          ringPositions.text,
+          plugboard.text);
     });
   }
   Widget Boton(label){
@@ -132,21 +158,143 @@ class _Enigma_PageState extends State<Enigma_Page> {
         children: [
           Column(
             children: [
-              Text("1er Rotor"),
+              Text("Rotores"),
+              SizedBox(
+                height: size.height*0.01,
+              ),
+              Container(
+                width: size.width*0.4,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(size.width*0.05))
+                ),
+                child:
+                TextField(
+
+                  controller: rotors,
+                  cursorColor: _colores.primaryColor,
+                  decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: _colores.secondColor),
+                          borderRadius: BorderRadius.all(Radius.circular(size.width*0.05))),
+                      contentPadding: EdgeInsets.symmetric(horizontal: size.width*0.03),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: _colores.primaryColor),
+                          borderRadius: BorderRadius.all(Radius.circular(size.width*0.05))
+                      )
+                  ),
+                ),
+              ),
+              Text("Ring Settings"),
+              SizedBox(
+                height: size.height*0.01,
+              ),
+              Container(
+                width: size.width*0.4,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(size.width*0.05))
+                ),
+                child:
+                TextField(
+
+                  controller: ringSettings,
+                  cursorColor: _colores.primaryColor,
+                  decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: _colores.secondColor),
+                          borderRadius: BorderRadius.all(Radius.circular(size.width*0.05))),
+                      contentPadding: EdgeInsets.symmetric(horizontal: size.width*0.03),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: _colores.primaryColor),
+                          borderRadius: BorderRadius.all(Radius.circular(size.width*0.05))
+                      )
+                  ),
+                ),
+              ),Text("Ring Positions"),
+              SizedBox(
+                height: size.height*0.01,
+              ),
+              Container(
+                width: size.width*0.4,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(size.width*0.05))
+                ),
+                child:
+                TextField(
+
+                  controller: ringPositions,
+                  cursorColor: _colores.primaryColor,
+                  decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: _colores.secondColor),
+                          borderRadius: BorderRadius.all(Radius.circular(size.width*0.05))),
+                      contentPadding: EdgeInsets.symmetric(horizontal: size.width*0.03),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: _colores.primaryColor),
+                          borderRadius: BorderRadius.all(Radius.circular(size.width*0.05))
+                      )
+                  ),
+                ),
+              )
 
             ],
           ),
           Column(
             children: [
-              Text("2do Rotor"),
+              Text("Reflector"),
+              SizedBox(
+                height: size.height*0.01,
+              ),
+              Container(
+                width: size.width*0.4,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(size.width*0.05))
+                ),
+                child:
+                TextField(
+
+                  controller: reflector,
+                  cursorColor: _colores.primaryColor,
+                  decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: _colores.secondColor),
+                          borderRadius: BorderRadius.all(Radius.circular(size.width*0.05))),
+                      contentPadding: EdgeInsets.symmetric(horizontal: size.width*0.03),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: _colores.primaryColor),
+                          borderRadius: BorderRadius.all(Radius.circular(size.width*0.05))
+                      )
+                  ),
+                ),
+              ),
+              Text("PlugBoard"),
+              SizedBox(
+                height: size.height*0.01,
+              ),
+              Container(
+                width: size.width*0.4,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(size.width*0.05))
+                ),
+                child:
+                TextField(
+
+                  controller: plugboard,
+                  cursorColor: _colores.primaryColor,
+                  decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: _colores.secondColor),
+                          borderRadius: BorderRadius.all(Radius.circular(size.width*0.05))),
+                      contentPadding: EdgeInsets.symmetric(horizontal: size.width*0.03),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: _colores.primaryColor),
+                          borderRadius: BorderRadius.all(Radius.circular(size.width*0.05))
+                      )
+                  ),
+                ),
+              )
 
             ],
           ),
-          Column(
-            children: [
-              Text("3er Rotor"),
-
-            ],),
         ],
       ),
     );

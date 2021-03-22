@@ -4,13 +4,8 @@
 }*/
 
 
-String enigma_algo(plaintext){
+String enigma_algo(plaintext,rotors,reflector,ringSettings,ringPositions,plugboard){
   var LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  var rotors = ["I","II","III"];
-  var reflector = "UKW-B";
-  var ringSettings ="ABC";
-  var ringPositions = "DEF" ;
-  var plugboard = "AT BS DE FM IR KN LZ OW PV XY";
   //Enigma Rotors and reflectors
   var rotor1 = "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
   var rotor1Notch = "Q";
