@@ -68,34 +68,37 @@ class _MyAppState extends State<MyAppS> {
             ],
           ),
         ),
-        bottomNavigationBar: BottomNavyBar(
-          selectedIndex: _currentIndex,
-          onItemSelected: (index) {
-            setState(() => _currentIndex = index);
-            _pageController.jumpToPage(index);
-          },
-          items: <BottomNavyBarItem>[
-            BottomNavyBarItem(
-                title: Text(titulos[0]),
-                icon: Icon(Icons.looks_one),
-                activeColor: _colores.primaryColor
-            ),
-            BottomNavyBarItem(
-                title: Text(titulos[1]),
-                icon: Icon(Icons.looks_two),
-                activeColor: _colores.primaryColor
-            ),
-            BottomNavyBarItem(
-                title: Text(titulos[2]),
-                icon: Icon(Icons.looks_3),
-                activeColor: _colores.primaryColor
-            ),
-            BottomNavyBarItem(
-                title: Text(titulos[3]),
-                icon: Icon(Icons.looks_4),
-                activeColor: _colores.primaryColor
-            ),
-          ],
+        bottomNavigationBar: SizedBox(
+          height: 60,
+          child: BottomNavyBar(
+            selectedIndex: _currentIndex,
+            onItemSelected: (index) {
+              setState(() => _currentIndex = index);
+              _pageController.jumpToPage(index);
+            },
+            items: <BottomNavyBarItem>[
+              BottomNavyBarItem(
+                  title: Text(titulos[0]),
+                  icon: Icon(Icons.looks_one),
+                  activeColor: _colores.primaryColor
+              ),
+              BottomNavyBarItem(
+                  title: Text(titulos[1]),
+                  icon: Icon(Icons.looks_two),
+                  activeColor: _colores.primaryColor
+              ),
+              BottomNavyBarItem(
+                  title: Text(titulos[2]),
+                  icon: Icon(Icons.looks_3),
+                  activeColor: _colores.primaryColor
+              ),
+              BottomNavyBarItem(
+                  title: Text(titulos[3]),
+                  icon: Icon(Icons.looks_4),
+                  activeColor: _colores.primaryColor
+              ),
+            ],
+          ),
         ),
       ),
     );

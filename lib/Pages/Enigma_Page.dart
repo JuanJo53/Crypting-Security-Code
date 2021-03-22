@@ -36,15 +36,16 @@ class _Enigma_PageState extends State<Enigma_Page> {
     ringPositions.text = "DEF" ;
     plugboard.text = "AT BS DE FM IR KN LZ OW PV XY";
   }
-  var heightAppbar = AppBar().preferredSize.height;
+  var heightAppbar ;
   @override
   Widget build(BuildContext context) {
+    heightAppbar=Scaffold.of(context).appBarMaxHeight;
     size=MediaQuery.of(context).size;
     return Scaffold(
 
         body: SingleChildScrollView(
           child: SizedBox(
-            height: size.height-heightAppbar-85,
+            height: size.height-heightAppbar-60,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
