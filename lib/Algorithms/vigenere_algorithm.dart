@@ -13,17 +13,33 @@ List matriz = [];
 String encripta(mensaje, llave){
   mensaje = mensaje.trim();
   llave = llave.trim();
-
+  
   Vigenere();
-  return cifra(mensaje, llave).trim().toLowerCase();
+  String encriptado = cifra(mensaje, llave).trim().toLowerCase();
+  return anadirEspacio(encriptado, mensaje);
 }
 
 String desencripto(mensaje, llave){
   mensaje = mensaje.trim();
   llave = llave.trim();
-
+  
   Vigenere();
-  return descifra(mensaje, llave).trim().toLowerCase();
+  String desencriptado = descifra(mensaje, llave).trim().toLowerCase();
+  return anadirEspacio(desencriptado, mensaje);
+}
+
+String anadirEspacio(encriptado, mensaje){
+  String encrip = "";
+  int aux = 0;
+  for(int i = 0; i < mensaje.length; i++){
+    if(mensaje[i] == " "){
+      encrip += " ";
+      aux++;
+    } else {
+      encrip += encriptado[i - aux]; 
+    }
+  }
+  return encrip;
 }
 
 Vigenere(){
