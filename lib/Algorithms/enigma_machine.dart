@@ -10,7 +10,7 @@ String enigma(String plaintext, String rotor1, String rotor2, String rotor3, Str
 }
 
 
-void encode(plaintext){
+String encode(plaintext){
   var rotors, reflector,ringSettings,ringPositions,plugboard;
   //Enigma Rotors and reflectors
   var rotor1 = "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
@@ -44,9 +44,9 @@ void encode(plaintext){
   var rotorA = rotorDict[rotors[0]];
   var rotorB = rotorDict[rotors[1]];
   var rotorC = rotorDict[rotors[2]];
-  // rotorANotch = rotorNotchDict[rotors[0]];
-  // rotorBNotch = rotorNotchDict[rotors[1]];
-  // rotorCNotch = rotorNotchDict[rotors[2]];
+  rotorANotch = rotorNotchDict[rotors[0]];
+  rotorBNotch = rotorNotchDict[rotors[1]];
+  rotorCNotch = rotorNotchDict[rotors[2]];
 
   var rotorALetter = ringPositions[0];
   var rotorBLetter = ringPositions[1];
@@ -78,6 +78,108 @@ void encode(plaintext){
   var plugboardConnections = plugboard.upper().split(" ");
   var plugboardDict = {};
 
+  for (var pair in plugboardConnections){
+    if(pair.lenght==2){
+      plugboardDict[pair[0]] = pair[1];
+      plugboardDict[pair[1]] = pair[0];
+    }
+  }
+  plaintext = plaintext.upper();
+
+  for (var letter in plaintext){
+    var encryptedLetter = letter;
+    if (alphabet.contains(letter)){
+      //Rotate Rotors - This happens as soon as a key is pressed, before encrypting the letter!
+      var rotorTrigger = false;
+      //Third rotor rotates by 1 for every key being pressed
+      if (rotorCLetter == rotorCNotch){
+        rotorTrigger = true;
+      }
+      rotorCLetter = alphabet[(alphabet.index(rotorCLetter) + 1) % 26];
+      //Check if rotorB needs to rotate
+      if (rotorTrigger){
+        rotorTrigger = false;
+        if (rotorBLetter == rotorBNotch){
+          rotorTrigger = true;
+        }
+        rotorBLetter = alphabet[(alphabet.index(rotorBLetter) + 1) % 26];
+        //Check if rotorA needs to rotate
+        if (rotorTrigger){
+          rotorTrigger = false;
+          rotorALetter = alphabet[(alphabet.index(rotorALetter) + 1) % 26];
+        }
+      }else{
+        //Check for double step sequence!
+        if (rotorBLetter == rotorBNotch){
+          rotorBLetter = alphabet[(alphabet.index(rotorBLetter) + 1) % 26];
+          rotorALetter = alphabet[(alphabet.index(rotorALetter) + 1) % 26];
+        }
+      }
+      //Implement plugboard encryption!
+      if (plugboardDict.keys().contains(letter)){
+        if (plugboardDict[letter]!=""){
+          encryptedLetter = plugboardDict[letter];
+        }
+      }
+      //Rotors & Reflector Encryption
+      var offsetA = alphabet.index(rotorALetter);
+      var offsetB = alphabet.index(rotorBLetter);
+      var offsetC = alphabet.index(rotorCLetter);
+
+      // Wheel 3 Encryption
+      var pos = alphabet.index(encryptedLetter);
+      var let = rotorC[(pos + offsetC)%26];
+      pos = alphabet.index(let);
+      encryptedLetter = alphabet[(pos - offsetC +26)%26];
+
+      // Wheel 2 Encryption
+      pos = alphabet.index(encryptedLetter);
+      let = rotorB[(pos + offsetB)%26];
+      pos = alphabet.index(let);
+      encryptedLetter = alphabet[(pos - offsetB +26)%26];
+
+      // Wheel 1 Encryption
+      pos = alphabet.index(encryptedLetter);
+      let = rotorA[(pos + offsetA)%26];
+      pos = alphabet.index(let);
+      encryptedLetter = alphabet[(pos - offsetA +26)%26];
+
+      // Reflector encryption!
+      if (reflectorDict.keys().contains(encryptedLetter)){
+        if (reflectorDict[encryptedLetter]!=""){
+          encryptedLetter = reflectorDict[encryptedLetter];
+        }
+      }
+
+      // Back through the rotors
+      // Wheel 1 Encryption
+      pos = alphabet.index(encryptedLetter);
+      let = alphabet[(pos + offsetA)%26];
+      pos = rotorA.index(let);
+      encryptedLetter = alphabet[(pos - offsetA +26)%26];
+
+      // Wheel 2 Encryption
+      pos = alphabet.index(encryptedLetter);
+      let = alphabet[(pos + offsetB)%26];
+      pos = rotorB.index(let);
+      encryptedLetter = alphabet[(pos - offsetB +26)%26];
+
+      // Wheel 3 Encryption
+      pos = alphabet.index(encryptedLetter);
+      let = alphabet[(pos + offsetC)%26];
+      pos = rotorC.index(let);
+      encryptedLetter = alphabet[(pos - offsetC +26)%26];
+
+      //Implement plugboard encryption!
+      if (plugboardDict.keys().contains(encryptedLetter)){
+        if (plugboardDict[encryptedLetter]!=""){
+          encryptedLetter = plugboardDict[encryptedLetter];
+        }
+      }
+    }
+    ciphertext = ciphertext + encryptedLetter;
+  }
+  return ciphertext;
 }
 
 
