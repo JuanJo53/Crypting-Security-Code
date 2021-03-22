@@ -25,28 +25,36 @@ class _Caesar_PageState extends State<Caesar_Page> {
     // TODO: implement initState
     super.initState();
   }
+  double heightAppbar;
   @override
   Widget build(BuildContext context) {
+
+    heightAppbar=Scaffold.of(context).appBarMaxHeight;
     size=MediaQuery.of(context).size;
     return Scaffold(
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Input("Ingrese el texto a cifrar",input,TextInputType.text,size.width*0.1),
-              InputSlider("Ingrese la cantidad a recorrer",number,TextInputType.number,size.width*0.1),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+        body: SingleChildScrollView(
+          child: SizedBox(
+            height: size.height-heightAppbar-60,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  Input("Ingrese el texto a cifrar",input,TextInputType.text,size.width*0.1),
+                  InputSlider("Ingrese la cantidad a recorrer",number,TextInputType.number,size.width*0.1),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
 
-                  Boton("Encriptar"),
+                      Boton("Encriptar"),
 
-                  Boton("Desencriptar"),
+                      Boton("Desencriptar"),
+                    ],
+                  ),
+                  InputArea("Texto Cifrado",output),
+
                 ],
               ),
-              InputArea("Texto Cifrado",output),
-
-            ],
           ),
+        ),
     );
   }
   void cifrar(){
