@@ -1,26 +1,15 @@
-void main() {
+String enigma(String plaintext, String rotor1, String rotor2, String rotor3, String refl, String ringS, String ringP, String plugB) {
   var LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-//   var rotors = ("I","II","III");
-//   var reflector = "UKW-B";
-//   var ringSettings ="AAC";
-//   var ringPositions = "DEF" ;
-//   var plugboard = "AT BS DE FM IR KN LZ OW PV XY";
-
-  print (caesarShift("Hola", 45));
+  var rotors = ("I","II","III");
+  var reflector = "UKW-B";
+  var ringSettings ="AAC";
+  var ringPositions = "DEF" ;
+  var plugboard = "AT BS DE FM IR KN LZ OW PV XY";
+  
+  encode(plaintext);
 }
 
-String caesarShift(str,amount){
-  var output="";
-  for (var i = 0; i < str.length; i++) {
-    var c=str[i];
-    var code=str.codeUnitAt(i);
-    if((code>=65)&&(code<=90)){
-      c=String.fromCharCode(((code - 65 + amount) % 26) + 65);
-    }
-    output = output + c;
-  }
-  return output;
-}
+
 void encode(plaintext){
   var rotors, reflector,ringSettings,ringPositions,plugboard;
   //Enigma Rotors and reflectors
@@ -74,6 +63,33 @@ void encode(plaintext){
   rotorB = caesarShift(rotorB,offsetBSetting);
   rotorC = caesarShift(rotorC,offsetCSetting);
 
+  if (offsetASetting>0){
+    rotorA = rotorA[26-offsetASetting:] + rotorA[0:26-offsetASetting];
+  }
+  if (offsetBSetting>0){
+    rotorB = rotorB[26-offsetBSetting:] + rotorB[0:26-offsetBSetting];
+  }
+  if (offsetCSetting>0){
+    rotorC = rotorC[26-offsetCSetting:] + rotorC[0:26-offsetCSetting];
+  }
+  var ciphertext = "";
+
+  //Converplugboard settings into a dictionary
+  var plugboardConnections = plugboard.upper().split(" ");
+  var plugboardDict = {};
+
+}
 
 
+String caesarShift(str,amount){
+  var output="";
+  for (var i = 0; i < str.length; i++) {
+    var c=str[i];
+    var code=str.codeUnitAt(i);
+    if((code>=65)&&(code<=90)){
+      c=String.fromCharCode(((code - 65 + amount) % 26) + 65);
+    }
+    output = output + c;
+  }
+  return output;
 }
