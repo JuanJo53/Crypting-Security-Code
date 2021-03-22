@@ -14,7 +14,7 @@ class _DiscoCifradoPageState extends State<DiscoCifradoPage> {
   Color_Palette _colores;
   Size size;
 
-  _DiscoCifradoPageState(Color_Palette colores);
+  _DiscoCifradoPageState(this._colores);
   TextEditingController cifrar=TextEditingController();
   TextEditingController descifrar=TextEditingController();
   TextEditingController output=TextEditingController();
