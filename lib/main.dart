@@ -1,15 +1,25 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:crypting_security_app/Pages/Enigma_Page.dart';
 import 'package:crypting_security_app/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'Pages/Caesar_Page.dart';
 
+
 void main() => runApp(MyApp());
 
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Material App',
+      home: MyAppS());
+  }
+}
 
-class MyApp extends StatefulWidget {
+class MyAppS extends StatefulWidget {
   Color_Palette _colores;
-  MyApp(){
+  MyAppS(){
     _colores=Color_Palette();
   }
 
@@ -19,7 +29,7 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState(_colores);
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyAppS> {
   var titulos=["Caesar","Disco","Vigenere","Enigma"];
   Color_Palette _colores;
   _MyAppState(this._colores);
@@ -54,7 +64,7 @@ class _MyAppState extends State<MyApp> {
               Caesar_Page(_colores),
               Caesar_Page(_colores),
               Caesar_Page(_colores),
-              Caesar_Page(_colores),
+              Enigma_Page(_colores),
             ],
           ),
         ),

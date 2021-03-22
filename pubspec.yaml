@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   bottom_navy_bar: ^5.6.0
   flutter_xlider: ^3.4.0
+  dropdown_below: ^0.0.7
 
 dev_dependencies:
   flutter_test:
