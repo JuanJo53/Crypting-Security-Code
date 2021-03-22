@@ -17,13 +17,24 @@ class _Caesar_PageState extends State<Caesar_Page> {
   _Caesar_PageState(this._colores){
     number.text="0.0";
   }
+
   TextEditingController input=TextEditingController();
   TextEditingController number=TextEditingController();
   TextEditingController output=TextEditingController();
+  bool sliderS=false;
+  @override
+  void dispose() {
+    super.dispose();
+    print(context);
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    setState(() {
+
+      sliderS=true;
+    });
   }
   double heightAppbar;
   @override
@@ -33,27 +44,25 @@ class _Caesar_PageState extends State<Caesar_Page> {
     size=MediaQuery.of(context).size;
     return Scaffold(
         body: SingleChildScrollView(
-          child: SizedBox(
-            height: size.height-heightAppbar-60,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Input("Ingrese el texto a cifrar",input,TextInputType.text,size.width*0.1),
-                  InputSlider("Ingrese la cantidad a recorrer",number,TextInputType.number,size.width*0.1),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(height: 20,),
+                Input("Ingrese el texto a cifrar",input,TextInputType.text,size.width*0.1),
+                sliderS?InputSlider("Ingrese la cantidad a recorrer",number,TextInputType.number,size.width*0.1):Container(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
 
-                      Boton("Encriptar"),
+                    Boton("Encriptar"),
 
-                      Boton("Desencriptar"),
-                    ],
-                  ),
-                  InputArea("Texto Cifrado",output),
+                    Boton("Desencriptar"),
+                  ],
+                ),
+                InputArea("Texto Cifrado",output),
 
-                ],
-              ),
-          ),
+              ],
+            ),
         ),
     );
   }
@@ -192,6 +201,7 @@ class _Caesar_PageState extends State<Caesar_Page> {
 
           ),
           FlutterSlider(
+
             values: [double.parse(number.text)],
 
             trackBar: FlutterSliderTrackBar(

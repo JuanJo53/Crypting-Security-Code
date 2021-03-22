@@ -47,6 +47,7 @@ class _Enigma_PageState extends State<Enigma_Page> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              SizedBox(height: 20,),
               Input("Ingrese el texto a cifrar",input,TextInputType.text,size.width*0.1),
               InputEnigma(),
               Boton("Encriptar"),

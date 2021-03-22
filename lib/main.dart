@@ -63,6 +63,7 @@ class _MyAppState extends State<MyAppS> {
             onPageChanged: (index) {
               setState(() => _currentIndex = index);
             },
+
             children: <Widget>[
               Caesar_Page(_colores),
               DiscoCifradoPage(_colores),
@@ -77,7 +78,7 @@ class _MyAppState extends State<MyAppS> {
             selectedIndex: _currentIndex,
             onItemSelected: (index) {
               setState(() => _currentIndex = index);
-              _pageController.jumpToPage(index);
+              _pageController.animateToPage(index,duration: Duration(milliseconds: 500),curve: Curves.easeInOut);
             },
             items: <BottomNavyBarItem>[
               BottomNavyBarItem(
