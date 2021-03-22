@@ -1,4 +1,46 @@
 List matriz = [];
+// void main(){
+//   String mensaje = "Encriptado por vigenere".trim();
+//   String llave = "criptii".trim();
+//
+//   Vigenere();
+//   String cripto = cifra(mensaje, llave).trim().toLowerCase();
+//   print(cripto);
+//   print(descifra(cripto, llave).trim().toLowerCase());
+//   //print(quitaEspacios(mensaje));
+//   //print(mensaje.length);
+// }
+String encripta(mensaje, llave){
+  mensaje = mensaje.trim();
+  llave = llave.trim();
+  
+  Vigenere();
+  String encriptado = cifra(mensaje, llave).trim().toLowerCase();
+  return anadirEspacio(encriptado, mensaje);
+}
+
+String desencripto(mensaje, llave){
+  mensaje = mensaje.trim();
+  llave = llave.trim();
+  
+  Vigenere();
+  String desencriptado = descifra(mensaje, llave).trim().toLowerCase();
+  return anadirEspacio(desencriptado, mensaje);
+}
+
+String anadirEspacio(encriptado, mensaje){
+  String encrip = "";
+  int aux = 0;
+  for(int i = 0; i < mensaje.length; i++){
+    if(mensaje[i] == " "){
+      encrip += " ";
+      aux++;
+    } else {
+      encrip += encriptado[i - aux]; 
+    }
+  }
+  return encrip;
+}
 
 Vigenere(){
   int codigo=65;
@@ -20,7 +62,6 @@ Vigenere(){
       codigo=65;
     }
   }
-  print(matriz);
 }
 
 String cifra(mensaje, llave){
@@ -30,17 +71,13 @@ String cifra(mensaje, llave){
 
   mensaje = mensaje.toUpperCase();
   llave = llave.toUpperCase();
-
-  print(llave);
+  print(mensaje);
   llave = completa(llave,mensaje.length);
-
   print(llave);
 
   for(int i = 0; i < mensaje.length; i++){
-    print("for");
     criptograma += getCaracter(mensaje.substring(i, i+1), llave.substring(i, i+1));
   }
-
   return criptograma;
 }
 
@@ -77,26 +114,59 @@ String completa(String cadena,int tamano){
   return cadena;
 }
 
-String getCaracter(mensaje, clave){
-  int posicionMensaje = 0, posicionClave = 0, indice = 0;
-  bool encontrado = false;
-
-  while(indice < 26 && encontrado == false){
-    if(matriz[0][indice] == mensaje){
-      encontrado = true;
-      posicionMensaje = indice;
+String getCaracter(mensaje,clave){
+  int posicionMensaje=0,posicionClave=0,indice=0;
+  bool encontrado=false;
+  while(indice<26 && encontrado==false){
+    if(matriz[0][indice]==mensaje.codeUnitAt(0)){
+      encontrado=true;
+      posicionMensaje=indice;
     }
-
     indice++;
   }
-  encontrado = false;
-  indice = 0;
+  encontrado=false;
+  indice=0;
   while(indice<26 && encontrado==false){
-    if(matriz[indice][0] == clave){
-      encontrado = true;
-      posicionClave = indice;
+    if (matriz[indice][0]==clave.codeUnitAt(0)){
+      encontrado=true;
+      posicionClave=indice;
     }
-    indice ++;
+    indice++;
   }
-  return matriz[posicionClave][posicionMensaje];
+  return String.fromCharCode(matriz[posicionClave][posicionMensaje]);
+}
+
+String descifra(mensaje, clave){
+  String criptograma=" ";
+  mensaje=quitaEspacios(mensaje);
+  clave=quitaEspacios(clave);
+  mensaje=mensaje.toUpperCase();
+  clave=clave.toUpperCase();
+  clave=completa(clave,mensaje.length);
+  for(int i=0;i<mensaje.length;i++){
+    criptograma+=getCaracterDescifrado(mensaje.substring(i, i+1),clave.substring(i, i+1));
+  }
+  return criptograma;
+}
+
+String getCaracterDescifrado(cripto, clave){
+  int posicionMensaje=0,posicionClave=0,indice=0;
+  bool encontrado=false;
+  while(indice<26 && encontrado==false){
+    if(matriz[0][indice]==clave.codeUnitAt(0)){
+      encontrado=true;
+      posicionClave=indice;
+    }
+    indice++;
+  }
+  encontrado=false;
+  indice=0;
+  while(indice<26 && encontrado==false){
+    if (matriz[indice][posicionClave]==cripto.codeUnitAt(0)){
+      encontrado=true;
+      posicionMensaje=indice;
+    }
+    indice++;
+  }
+  return String.fromCharCode(matriz[0][posicionMensaje]);
 }
