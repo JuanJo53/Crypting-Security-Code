@@ -57,7 +57,7 @@ String Disco(String texto, int flag) {
     return fraseCifrada;
   }else{
 
-    List palabras2=fraseCifrada.split("-");String fraseDescifrada1="";
+    List palabras2=texto.split("-");String fraseDescifrada1="";
     int cantidad2=palabras2.length,verificar=0;
     for(int j=0;j<cantidad2;j++) {
       if(j==0) {
