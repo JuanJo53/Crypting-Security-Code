@@ -1,3 +1,4 @@
+import 'package:crypting_security_app/Algorithms/vigenere_algorithm.dart';
 import 'package:crypting_security_app/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class _Vigenere_PageState extends State<Vigenere_Page>{
   _Vigenere_PageState(this._colores){
   }
   TextEditingController input=TextEditingController();
-  TextEditingController number=TextEditingController();
+  TextEditingController llave=TextEditingController();
   TextEditingController output=TextEditingController();
   @override
   void initState() {
@@ -36,14 +37,14 @@ class _Vigenere_PageState extends State<Vigenere_Page>{
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Input("Ingrese el texto a cifrar",input,TextInputType.text,size.width*0.1),
-              Input("Ingrese la llave",input,TextInputType.text,size.width*0.1),
+              Input("Ingrese la llave",llave,TextInputType.text,size.width*0.1),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
 
                   Boton("Encriptar"),
-
                   Boton("Desencriptar"),
+                  Boton("Limpiar"),
                 ],
               ),
               InputArea("Texto Cifrado",output),
@@ -56,14 +57,19 @@ class _Vigenere_PageState extends State<Vigenere_Page>{
   }
   void cifrar(){
     setState(() {
-      print(number.text);
-      //output.text=caesar(double.parse(number.text).toInt(), input.text);
+      output.text=encripta(input.text, llave.text);
     });
   }
   void descifrar(){
     setState(() {
-      print(number.text);
-      //output.text=caesar(double.parse(number.text).toInt()*-1, input.text);
+      output.text=desencripto(input.text, llave.text);
+    });
+  }
+  void limpiar(){
+    setState(() {
+      output.text="";
+      llave.text="";
+      input.text="";
     });
   }
   Widget Boton(label){
@@ -78,8 +84,10 @@ class _Vigenere_PageState extends State<Vigenere_Page>{
           if(label=="Encriptar"){
             cifrar();
           }
-          else{
+          else if(label == "Desencriptar"){
             descifrar();
+          } else {
+            limpiar();
           }
 
         },
@@ -137,7 +145,6 @@ class _Vigenere_PageState extends State<Vigenere_Page>{
             ),
             child:
             TextField(
-
               controller: input,
               keyboardType: key,
               cursorColor: _colores.primaryColor,
